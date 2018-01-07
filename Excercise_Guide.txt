@@ -1,0 +1,8 @@
+1. Generate the first 10 even numbers. 
+2. Input a number and check if it is prime or not 
+3. Input 10 numbers and display the smalest and largest of them 
+4. Input 10 numbers and display the sum and average 
+    Explire the internet and find out how to display a floating number required decimal places. 
+4. Input a number and calculate its factorial 
+
+Additionally try out the questions discussed in the lecture session as same or alternative methods. 
