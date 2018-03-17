@@ -39,9 +39,12 @@ class FileOperation:
         data = file_handle.read()
         return data
     
-    def writeDatetoFile(self,fileName):
-        self.fileName = fileName
-        filewrite = open(filename,'w')
+    def writeDatetoFile(self,df,fileName,sheetName):
+        import pandas as pd
+        writer = pd.ExcelWriter(fileName)
+        df.to_excel(writer,sheetName)
+        writer.save()
+        return "File SuccessFuly Return"
         
     ##Convert HTML to Text 
     def readTextFromHtml(self,htmlData):
@@ -57,6 +60,7 @@ class FileOperation:
         import sqlite3
         conn = sqlite3.connect(dbName)
         conn.execute(query)
+        conn.commit()
         conn.close
         return conn
 
@@ -65,11 +69,11 @@ class FileOperation:
     def readFromSQLLiteDb(self,dbName,query):
         self.query = query
         import sqlite3
+        import pandas as pd
         conn = sqlite3.connect(dbName)
-        cursor = conn.cursor()
-        result = cursor.execute(query).fetchall()
+        df = pd.read_sql_query(query,conn)
         conn.close
-        return result
+        return df
 
 ########################---STEP1 - Function to read an excel from a physical location -----##############################
 fo = FileOperation()
@@ -120,3 +124,4 @@ insertValues = fo.writeToSQLLiteDb("SEO_DB",insetQuery)
 readTableQuery = 'Select * from SEO_RESULT'
 readResult = fo.readFromSQLLiteDb("SEO_DB",readTableQuery)
 print(readResult)
+resultWriteToExcel = fo.writeDatetoFile(readResult,"SEO_Count_Result.xls", "SEO_Result1")
